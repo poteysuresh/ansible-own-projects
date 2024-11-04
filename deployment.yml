@@ -1,0 +1,31 @@
+---
+- name: Deployment of application on server
+  hosts: all
+  become: true
+  remote_user: suri
+  vars_prompt:
+    name: package
+    prompt: enter your package name
+  tasks:
+    - name: install the required webserver
+      ansible.builtin.yum:
+        name: "{{ package }}"
+        state: latest
+
+    - name: downloading the project
+      ansible.builtin.git:
+        repo: https://github.com/poteysuresh/Gym-Project.git
+        dest: /var/www/html
+
+    - name: start the webserver
+      ansible.builtin.service:
+        name: httpd
+        state: restarted
+
+    - name: firewalld rules
+      ansible.builtin.shell:
+        cmd: firewall-cmd --add-service=http --permanent
+    
+    - name: firewall reload
+      ansible.builtin.shell:
+        cmd: firewall-cmd --reload
