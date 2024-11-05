@@ -1,0 +1,11 @@
+---
+- name: Creation of EC2 instance in AWS
+  hosts: localhost
+  tasks:
+    - name: creating instance 
+      amazon.aws.ec2_instance:
+        name: webserver
+        region: ap-south-1
+        image_id: ami-04a37924ffe27da53
+        instance_type: t2.micro
+        count: 1

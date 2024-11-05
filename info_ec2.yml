@@ -1,0 +1,9 @@
+---
+- name: collect the information of ec2 instance
+  hosts: localhost
+  tasks:
+    - name: Gather information about all instances in mumbai
+      amazon.aws.ec2_instance_info:
+         region: ap-south-1
+         filters:
+           instance-state-name: ["running", "stopped"]

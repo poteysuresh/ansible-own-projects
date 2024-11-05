@@ -1,0 +1,9 @@
+---
+- name: Stop of EC2 instance in AWS
+  hosts: localhost
+  tasks:
+    - name: stopping instance 
+      amazon.aws.ec2_instance:
+        region: ap-south-1
+        instance_ids: i-071d88b7246781c2d
+        state: stopped
