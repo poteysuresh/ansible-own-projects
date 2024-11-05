@@ -1,0 +1,17 @@
+---
+- name: Stop of EC2 instance in AWS
+  hosts: localhost
+  vars_prompt:
+    -  name: instance_ID
+       prompt: provide the instance id
+       private: false
+
+    -  name: storage
+       prompt: provide te disk-name
+       private: false
+  tasks:
+    - amazon.aws.ec2_snapshot:
+        instance_id: "{{ instance_ID }}"
+        device_name: "{{ storage }}"
+        region: ap-south-1
+        description: snapshot of /data from DB123 taken 2013/11/28 12:18:32
