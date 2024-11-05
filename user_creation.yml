@@ -1,0 +1,24 @@
+---
+- name: creation of user in AWS account
+  hosts: localhost
+  vars_prompt:
+    - name: username
+      prompt: provide the username
+      private: false
+    - name: pass
+      prompt: provide the password
+      private: false
+    - name: access
+      prompt: provide the ARN
+      private: false
+  tasks:
+    - name: creating the user
+      amazon.aws.iam_user:
+        name: "{{ username }}"
+        password: "{{ pass }}"
+        password_reset_required: true
+        region: ap-south-1
+        state: present
+        managed_policies:
+          - arn:aws:iam::aws:policy/IAMUserChangePassword
+          - "{{ access }}"
